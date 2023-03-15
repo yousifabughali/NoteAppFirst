@@ -41,6 +41,8 @@ dependencies:
   path_provider: ^2.0.10
   easy_localization: ^3.0.1
   flutter_screenutil: ^5.5.3+2
+  url_launcher: ^6.1.6
+  share_plus: ^4.4.0
   
     
 

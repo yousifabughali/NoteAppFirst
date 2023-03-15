@@ -80,6 +80,7 @@ class _NewNoteState extends State<NewNote> {
             padding: const EdgeInsets.only(left: 8, right: 8),
             child: TextField(
               controller: _contentTextEditing,
+
               decoration:  InputDecoration(
                 border: InputBorder.none,
                 hintText: 'Enter the Content'.tr(),
@@ -148,7 +149,7 @@ class _NewNoteState extends State<NewNote> {
             valueListenable: _colorNotifier,
             builder: (BuildContext context,Color value, child) {
               return Container(
-                height: 225.h,
+                height: 250.h,
                 color: value,
 
                 child: Wrap(

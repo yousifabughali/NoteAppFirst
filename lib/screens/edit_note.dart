@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:note_app/models/note.dart';
 import 'package:note_app/provider/note_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class EditNote extends StatefulWidget {
   late int id;
@@ -24,6 +25,7 @@ class EditNote extends StatefulWidget {
 class _EditNoteState extends State<EditNote> {
   late TextEditingController _contentTextEditing, _titleTextEditing;
    late Color _selectedColor= widget.note_color;
+
   NoteModel get note {
     NoteModel newNote = NoteModel();
     newNote.id= widget.id;
@@ -124,9 +126,8 @@ class _EditNoteState extends State<EditNote> {
               valueListenable: _colorNotifier,
               builder: (BuildContext context,Color value, child) {
                 return Container(
-                  height: 225.h,
+                  height: 250.h,
                   color: value,
-
                   child: Wrap(
                     children: <Widget>[
                       ListTile(
@@ -139,11 +140,20 @@ class _EditNoteState extends State<EditNote> {
                       ListTile(
                           leading: const Icon(Icons.content_copy),
                           title:  Text('Duplicate'.tr()),
-                          onTap: () {}),
+                          onTap: () async {
+                            await Provider.of<NoteProvider>(context, listen: false)
+                                .create(note: note);
+                            Navigator.pop(context);
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Duplicated Successfully'),backgroundColor: Colors.green,));
+
+
+                          }),
                       ListTile(
                           leading: const Icon(Icons.share),
                           title:  Text('Share'.tr()),
-                          onTap: () {}),
+                          onTap: () {
+                            Share.share('${widget.title}\n${widget.content}');
+                          }),
                       MaterialColorPicker(
                         colors: fullMaterialColors,
                         selectedColor: _selectedColor,
@@ -214,6 +224,7 @@ class _EditNoteState extends State<EditNote> {
        Navigator.pushNamedAndRemoveUntil(context, '/Note_Screen', (route) => false);
      // Navigator.pushReplacementNamed(context, '/Note_Screen');
       }
+
 
     }
 

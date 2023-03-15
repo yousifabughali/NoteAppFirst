@@ -45,11 +45,8 @@ class _NoteAppState extends State<NoteApp> {
               context.setLocale(Locale('en',));
             }else{
               context.setLocale(Locale('ar'));
-
             }
-
-
-          }, icon: Icon(Icons.language))
+          }, icon: Icon(Icons.language),),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -73,8 +70,8 @@ class _NoteAppState extends State<NoteApp> {
         },
       ),
       body:
-          Consumer<NoteProvider>(builder: (context, NoteProvider value, child) {
-        if (value.notes.isEmpty) {
+          Consumer<NoteProvider>(builder: (context, NoteProvider provider, child) {
+        if (provider.notes.isEmpty) {
           return Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -96,14 +93,14 @@ class _NoteAppState extends State<NoteApp> {
           );
         } else {
           return ListView.builder(
-            itemCount: value.notes.length,
+            itemCount: provider.notes.length,
             itemBuilder: (context, index) {
               return NoteCard(
                 deviceSize: deviceSize,
-                id: value.notes[index].id,
-                title: value.notes[index].title,
-                content: value.notes[index].content,
-                note_color: value.notes[index].note_color,
+                id: provider.notes[index].id,
+                title: provider.notes[index].title,
+                content: provider.notes[index].content,
+                note_color: provider.notes[index].note_color,
               );
             },
           );
